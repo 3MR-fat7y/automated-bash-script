@@ -3,11 +3,12 @@
 # Function to install a package if not already installed
 install_package() {
     local package_name=$1
-    if ! rpm -q $package_name; then
+    if ! dpkg -l | grep -q $package_name; then
         read -p "$package_name is not installed. Do you want to install it? (y/n): " choice
         if [ "$choice" == "y" ]; then
             echo "Installing $package_name..."
-            sudo yum install -y $package_name
+            sudo apt-get update
+            sudo apt-get install -y $package_name
         else
             echo "Skipping $package_name installation."
         fi
@@ -15,7 +16,8 @@ install_package() {
         read -p "$package_name is already installed. Do you want to update it? (y/n): " choice
         if [ "$choice" == "y" ]; then
             echo "Updating $package_name..."
-            sudo yum update -y $package_name
+            sudo apt-get update
+            sudo apt-get upgrade -y $package_name
         else
             echo "Skipping $package_name update."
         fi
@@ -24,13 +26,14 @@ install_package() {
 
 # Update the system
 echo "Updating the system..."
-sudo yum update -y
+sudo apt-get update
+sudo apt-get upgrade -y
 
 # Install or update packages
-install_package aws-cli
+install_package awscli
 install_package terraform
 install_package git
-install_package docker
+install_package docker.io
 install_package ansible
 
 # Final report
@@ -55,6 +58,6 @@ echo ""
 
 # Install additional commonly used commands
 echo "Installing additional commands..."
-sudo yum install -y wget curl jq unzip
+sudo apt-get install -y wget curl jq unzip
 
 echo "Setup of important tools and commands is complete."

@@ -1,5 +1,5 @@
-# automated-bash-script-RHEL
-The script automates the setup of a RHEL-based system by updating it, installing or updating tools:
+# automated-bash-script-Ubuntu
+The script automates the setup of a Ubuntu-based system by updating it, installing or updating tools:
 1- AWS CLI
 2- Terraform
 3- Git
